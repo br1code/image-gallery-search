@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ImageGallerySearch.WebApi.Services;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +15,13 @@ namespace ImageGallerySearch.WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureLogging(logging => { logging.AddConsole(); })
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .ConfigureServices(collection =>
+                {
+                    // we register the hosted service as a singleton first so that there is only one instance, being able to stop it at any time
+                    collection.AddSingleton<ImageGalleryCacheLoaderService>();
+                    collection.AddHostedService(provider => provider.GetService<ImageGalleryCacheLoaderService>());
+                });
     }
 }
