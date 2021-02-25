@@ -59,7 +59,7 @@ namespace ImageGallerySearch.WebApi.Services
             {
                 await RefreshToken();
                 
-                return await _httpClient.SendAsync(new HttpRequestMessage(method, requestUri));
+                request = await _httpClient.SendAsync(new HttpRequestMessage(method, requestUri));
             }
 
             if (!request.IsSuccessStatusCode)
