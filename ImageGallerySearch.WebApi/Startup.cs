@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImageGallerySearch.WebApi.Interfaces;
+using ImageGallerySearch.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +33,8 @@ namespace ImageGallerySearch.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ImageGallerySearch.WebApi", Version = "v1"});
             });
+            
+            services.AddSingleton<IImageGalleryClient, ImageGalleryClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
