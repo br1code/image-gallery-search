@@ -34,7 +34,10 @@ namespace ImageGallerySearch.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ImageGallerySearch.WebApi", Version = "v1"});
             });
             
+            services.AddMemoryCache();
+            
             services.AddSingleton<IImageGalleryClient, ImageGalleryClient>();
+            services.AddSingleton<IImageGalleryCacheService, ImageGalleryCacheService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
